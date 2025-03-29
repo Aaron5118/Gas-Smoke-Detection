@@ -1,4 +1,4 @@
-# Gas & Smoke Monitor 🚨🔥 
+# Gas & Smoke Detection System 🚨🔥 
 ---
 
 ## Overview  
