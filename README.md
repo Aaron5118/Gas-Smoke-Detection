@@ -42,7 +42,7 @@ cd gas-smoke-detection
    - The **buzzer** turns ON.  
    - The **warning light** turns ON.  
    - A **warning message** is printed on the Serial Monitor.  
-   - The **web dashboard** updates with alert indicators.  
+   - The **web dashboard** updates with alert indicators.
 3️⃣ If the gas level drops below the threshold, the system resets.  
 
 ---
