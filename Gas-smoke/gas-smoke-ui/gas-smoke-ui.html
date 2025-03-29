@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gas & Smoke Monitor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body class="min-h-screen p-6">
+    <!-- Parallax Background -->
+    <div class="parallax-bg">
+      <div class="parallax-layer layer-1"></div>
+      <div class="parallax-layer layer-2"></div>
+    </div>
+
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <div class="max-w-md mx-auto">
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-8 fade-in">
+        <div>
+          <h1 class="text-2xl font-semibold">Hi User,</h1>
+          <p class="text-gray-400">welcome back home</p>
+        </div>
+        <div class="flex gap-4">
+          <button id="alertBtn" class="btn p-2 rounded-full bg-gray-800 text-gray-400 hover:text-white relative">
+            <div class="alert-badge hidden"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+          </button>
+          <button onclick="connectArduino()" class="btn p-2 rounded-full bg-gray-800 text-gray-400 hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="space-y-6">
+        <!-- Tabs -->
+        <div class="flex space-x-4 mb-6">
+          <button onclick="showTab('dashboard')" class="tab-btn btn active px-4 py-2 rounded-lg bg-gray-800 text-white">Dashboard</button>
+          <button onclick="showTab('history')" class="tab-btn btn px-4 py-2 rounded-lg bg-gray-800 text-gray-400">History</button>
+          <button onclick="showTab('settings')" class="tab-btn btn px-4 py-2 rounded-lg bg-gray-800 text-gray-400">Settings</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+          <div class="bg-gray-800 rounded-3xl p-6 mb-6 glass-effect">
+            <div class="flex justify-center mb-8">
+              <div class="circular-gauge">
+                <svg viewBox="0 0 100 100">
+                  <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+                  <circle class="gauge-fill" cx="50" cy="50" r="40" id="gaugeFill"
+                    stroke-dasharray="0 251.2"></circle>
+                  <text x="50" y="45" text-anchor="middle" class="text-3xl font-bold" fill="white">
+                    <tspan id="gasValue">0</tspan>
+                  </text>
+                  <text x="50" y="60" text-anchor="middle" class="text-sm" fill="#6b7280">PPM</text>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Status -->
+            <div class="text-center mb-8">
+              <p id="status" class="text-xl font-semibold text-green-400">Status: Safe</p>
+              <p class="text-sm text-gray-400 mt-2">Last updated: <span id="lastUpdate">Just now</span></p>
+            </div>
+
+            <!-- Monitoring Section -->
+            <div class="space-y-6">
+              <h2 class="text-xl font-semibold mb-4">Gas Level Monitoring</h2>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between text-sm text-gray-400 mb-2">
+                    <span>Gas Level</span>
+                    <span id="gasPercentage">0%</span>
+                  </div>
+                  <div class="monitoring-bar">
+                    <div class="monitoring-fill" id="gasBar" style="width: 0%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-sm text-gray-400 mb-2">
+                    <span>Smoke Level</span>
+                    <span id="smokePercentage">0%</span>
+                  </div>
+                  <div class="monitoring-bar">
+                    <div class="monitoring-fill" id="smokeBar" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- History Tab -->
+        <div id="history" class="tab-content">
+          <div class="bg-gray-800 rounded-3xl p-6 glass-effect">
+            <h2 class="text-xl font-semibold mb-4">Historical Data</h2>
+            <div class="mb-4 chart-container">
+              <canvas id="historyChart" height="200"></canvas>
+            </div>
+            <div class="space-y-4">
+              <div class="flex justify-between text-sm text-gray-400">
+                <span>Average Gas Level (24h)</span>
+                <span id="avgGas">0 PPM</span>
+              </div>
+              <div class="flex justify-between text-sm text-gray-400">
+                <span>Peak Level Today</span>
+                <span id="peakLevel">0 PPM</span>
+              </div>
+              <div class="flex justify-between text-sm text-gray-400">
+                <span>Alert Events (24h)</span>
+                <span id="alertCount">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settings" class="tab-content">
+          <div class="bg-gray-800 rounded-3xl p-6 glass-effect">
+            <h2 class="text-xl font-semibold mb-4">Settings</h2>
+            <div class="space-y-6">
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Alert Threshold (PPM)</label>
+                <input type="number" id="alertThreshold" value="300"
+                  class="w-full bg-gray-700 rounded-lg px-4 py-2 text-white" />
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Notification Settings</label>
+                <div class="space-y-2">
+                  <label class="flex items-center">
+                    <input type="checkbox" checked class="mr-2" />
+                    <span class="text-sm">Push Notifications</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" checked class="mr-2" />
+                    <span class="text-sm">Sound Alerts</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" checked class="mr-2" />
+                    <span class="text-sm">Email Notifications</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm text-gray-400 mb-2">Device Information</label>
+                <div class="bg-gray-700 rounded-lg p-4 text-sm">
+                  <p>Device ID: GSD-001</p>
+                  <p>Firmware: v1.2.0</p>
+                  <p>Last Calibration: 2025-03-29</p>
+                  <p>Battery: 85%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

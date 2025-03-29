@@ -1,0 +1,319 @@
+/* Animations */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(0, 230, 195, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 230, 195, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(0, 230, 195, 0.5);
+  }
+}
+
+/* Parallax background */
+.parallax-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  perspective: 1000px;
+  overflow: hidden;
+}
+
+.parallax-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.layer-1 {
+  background: linear-gradient(-45deg, #1a1d21, #2d1f3d, #1f2937, #1e1b2c);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+.layer-2 {
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 230, 195, 0.05) 100%);
+  transform: translateZ(-1px) scale(2);
+}
+
+/* Base styles */
+body {
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  background-color: #1a1d21;
+}
+
+/* Particles */
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Glass effect */
+.glass-effect {
+  background: rgba(31, 41, 55, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+}
+
+/* Animations */
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Buttons */
+.btn {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(45deg);
+  transition: all 0.3s ease;
+}
+
+.btn:hover::after {
+  transform: rotate(45deg) translate(50%, 50%);
+}
+
+/* Alert badge */
+.alert-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 12px;
+  height: 12px;
+  background: #ef4444;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+/* Custom checkbox */
+input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #00e6c3;
+  border-radius: 4px;
+  background: transparent;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+input[type="checkbox"]:checked {
+  background: #00e6c3;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #1a1d21;
+}
+
+/* Chart container */
+.chart-container {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+  transform: scale(1.02);
+}
+
+/* Gauge */
+.circular-gauge {
+  width: 240px;
+  height: 240px;
+  position: relative;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.gauge-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 15;
+}
+
+.gauge-fill {
+  fill: none;
+  stroke: #00e6c3;
+  stroke-width: 15;
+  transition: stroke-dasharray 0.3s ease;
+  filter: drop-shadow(0 0 6px #00e6c3);
+}
+
+/* Monitoring bars */
+.monitoring-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+}
+
+.monitoring-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00e6c3, #00f0ff);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 230, 195, 0.5);
+}
+
+/* Card */
+.card {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 10px rgba(0, 230, 195, 0.5);
+}
+
+.card p {
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+
+.card h2 {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.card .gauge-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 230, 195, 0.5);
+}
+
+.card .gauge-label {
+  font-size: 1rem;
+  color: #9ca3af;
+  margin-top: 0.5rem;
+}
+
+/* Tab content */
+.tab-content {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+  .circular-gauge {
+    width: 200px;
+    height: 200px;
+  }
+}
