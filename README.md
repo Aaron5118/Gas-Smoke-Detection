@@ -1,5 +1,7 @@
 # Gas & Smoke Detection System 🚨🔥 
----
+
+<img src="1.jpg" alt="Gas & Smoke Detection System" width="2000"/>  
+
 
 ## Overview  
 This project is an **Arduino-based Gas and Smoke Detection System** that uses an **MQ sensor** to detect gas/smoke levels in the environment. If dangerous levels are detected, an **alarm (buzzer) and warning light** will be activated to alert users. Additionally, a **web-based dashboard** provides real-time monitoring and historical data visualization.  
@@ -77,19 +79,11 @@ Download and install the **Arduino IDE** from the official website.
 ### 3️⃣ Run the Web Dashboard  
 To start the web dashboard, follow these steps:  
 
-#### **Option 1: Open Directly**  
+#### ** Open Directly**  
 - Open `gas-smoke-ui.html` in any browser.  
 - Make sure the Arduino is connected and sending data.  
 
-#### **Option 2: Run a Local Server (Recommended)**  
-- Install Python if not installed.  
-- Run the following command in the project folder:  
 
-```sh
-python -m http.server
-```
-
-- Open `http://localhost:8000` in your browser.  
 
 ---
 
